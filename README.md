@@ -77,20 +77,20 @@ Or hit this endpoint in your browser <http://localhost:8080/q/health>
 
 ## Using the API
 
-To retrieve Gists for a user specify the user on the host/gists/{user}.
+To retrieve Gists for a user specify the user on the host/{user}.
 
-<http://localhost:8080/gists>
+<http://localhost:8080/octocat>
 
 This will retrieve a page of gists (defaults to 30 items on a page)
 
 To retrieve a specific page, add a page query parameter e.g. 
 
-<http://localhost:8080/gists?page=2>
+<http://localhost:8080/octocat?page=2>
 
 To change the number of items per page add the `per_page` query parameter
 
-<http://localhost:8080/gists?per_page=10>
+<http://localhost:8080/octocat?perpage=2>
 
 You can also use both
 
-<http://localhost:8080/gists?per_page=5&page=2>
+<http://localhost:8080/octocat?perpage=3&page=2>

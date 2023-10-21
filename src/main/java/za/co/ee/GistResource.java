@@ -18,7 +18,7 @@ public class GistResource {
     public Set<Gist> getGists(
             @PathParam(value = "user")
             String user, @QueryParam("page") Integer page,
-            @QueryParam("per_page") Integer perPage) {
+            @QueryParam("perpage") Integer perPage) {
         // Todo decouple this api from the gitHib API via a separate model and service
         return gistClient.getById(user, page, perPage);
     }
