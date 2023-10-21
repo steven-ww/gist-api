@@ -1,8 +1,18 @@
 # gist-api
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project will build a docker image for an http server that accepts requests to port 8080/{user}
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+Primary technologies used include 
+
+* Quarkus
+* JBang
+* Maven
+* Wiremock
+* Microprofile
+* Jakarta EE
+* Java 
+* Docker
+* GraalVM
 
 ## Prerequisites
 
@@ -11,8 +21,8 @@ Docker installed and running.
 ## Building the application
 
 ### No Java 8+ installed
-If you do not java java 8 or above installed on your PC, you can use the jbang scripts (windows, linux or macOS) to 
-install java and run Maven
+If you do not java 8 (required to run maven) or above installed on your PC, you can use the jbang scripts 
+(windows, linux or macOS) to install java and run Maven
 
 This will cache all required resources, including java, in the `~/.jbang/cache` directory.
 
@@ -20,7 +30,7 @@ You can run `./jbang cache clear` to remove all of the cache
 
 > Find out more about JBang at https://www.jbang.dev/
  
-E.g. to build the application using a container with jbang run
+E.g. to build the application using a container with JBang run
 ```shell script
 ./jbang --main org.apache.maven.wrapper.MavenWrapperMain -Dmaven.multiModuleProjectDirectory=./maven .mvn/wrapper/maven-wrapper.jar package -Dnative -Dquarkus.native.container-build=true`
 ```
@@ -29,7 +39,7 @@ All examples below will assume you have java 8+ installed already, but if not an
 `./mvnw` 
 with 
 `./jbang --main org.apache.maven.wrapper.MavenWrapperMain -Dmaven.multiModuleProjectDirectory=./maven .mvn/wrapper/maven-wrapper.jar` 
-on the commands below. (or the relevant jbang script for your platform .cmd .ps1)  
+on the commands below. (or the relevant JBang script for your platform .cmd .ps1)  
 
 ## Build the Application and create a docker image 
 
@@ -41,11 +51,11 @@ This will firstly produce a native linux executable (irrespective of your platfo
 
 > Please ensure your docker virtual machine has enough resources in order to execute this build. (I'm running with 4GB of RAM)
 
-Then a docker image will be created by executing docker file in the ./src/main/docker/Dockerfile.native directory
+Then a docker image will be created by executing docker file in the `./src/main/docker/Dockerfile.native` directory
 
-The resulting image should be about 78Meg in size and be named as below
+The resulting image should be about 80Meg in size and be named as below
 
-> {username}/ee/gist-api   1.0.0-SNAPSHOT 
+> {username}/ee/gist-api   with tag -> 1.0.0-SNAPSHOT 
 
 ## Run the application
 
@@ -62,61 +72,25 @@ Confirm the server is up and accepting requests by running (hits the health chec
 curl localhost:8080/q/health
 ```
 
-Or hit this endpoint in your browser `http://localhost:8080/q/health`
+Or hit this endpoint in your browser <http://localhost:8080/q/health>
 
 
+## Using the API
 
+To retrieve Gists for a user specify the user on the host/gists/{user}.
 
+<http://localhost:8080/gists>
 
-## Running the application in dev mode
+This will retrieve a page of gists (defaults to 30 items on a page)
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
+To retrieve a specific page, add a page query parameter e.g. 
 
+<http://localhost:8080/gists?page=2>
 
+To change the number of items per page add the `per_page` query parameter
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+<http://localhost:8080/gists?per_page=10>
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+You can also use both
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/gist-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+<http://localhost:8080/gists?per_page=5&page=2>
