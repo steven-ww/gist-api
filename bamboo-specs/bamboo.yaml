@@ -27,23 +27,24 @@ Test:
         type: junit
         test-results: '**target/surefire-reports/*.xml'
   # Job's requirements
-  requirements:
-    - JDK
-    - MVN
+#  requirements:
+#    - JDK
+#    - MVN
 
 Build:
   tasks:
     - script:
+        - export JAVA_HOME=/Users/eework/.sdkman/candidates/java/17.0.5-amzn
         - mvn package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
   # Job's artifacts. Artifacts are shared by default.
   artifacts:
     - name: Native Executable
       pattern: target/gist-api-1.0-SNAPSHOT-runner
   # Job's requirements
-  requirements:
-    - Docker
-    - JDK
-    - MVN
+#  requirements:
+#    - Docker
+#    - JDK
+#    - MVN
 
 #Deploy:
 #  tasks:
