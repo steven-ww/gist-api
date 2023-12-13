@@ -1,0 +1,5 @@
+services:
+  gist:
+    ports:
+      - "8080:8080"
+    image: "eework/ee/gist-api:1.0.0-SNAPSHOT"
