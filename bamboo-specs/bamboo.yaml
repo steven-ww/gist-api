@@ -1,0 +1,50 @@
+---
+version: 2
+plan:
+  project-key: SP
+  key: GIST
+  name: Build and Deploy GIST API
+
+# List of plan's stages and jobs
+stages:
+  - Test the gist service:
+      jobs:
+        - Test
+  - Build The Native Image:
+      jobs:
+        - Build
+  #- Deploy the image:
+  #    jobs:
+  #      - Deploy
+
+#Job definition
+Test:
+  tasks:
+    - script:
+        - mvn test
+    - test-parser:
+        type: junit
+        test-results: '**target/surefire-reports/*.xml'
+  # Job's requirements
+  requirements:
+    - JDK
+    - MVN
+
+Build:
+  tasks:
+    - script:
+        - mvn package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+  # Job's artifacts. Artifacts are shared by default.
+  artifacts:
+    - name: Native Executable
+      pattern: target/gist-api-1.0-SNAPSHOT-runner
+  # Job's requirements
+  requirements:
+    - Docker
+    - JDK
+    - MVN
+
+#Deploy:
+#  tasks:
+#    - script:
+#        docker run -d --rm -p 8080:8080
