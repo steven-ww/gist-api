@@ -13,9 +13,9 @@ stages:
   - Build The Native Image:
       jobs:
         - Build
-  #- Deploy the image:
-  #    jobs:
-  #      - Deploy
+  - Deploy the image:
+      jobs:
+        - Deploy
 
 #Job definition
 Test:
@@ -37,16 +37,16 @@ Build:
         - export JAVA_HOME=/Users/eework/.sdkman/candidates/java/17.0.5-amzn
         - mvn package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
   # Job's artifacts. Artifacts are shared by default.
-  artifacts:
-    - name: Native Executable
-      pattern: target/gist-api-1.0-SNAPSHOT-runner
+#  artifacts:
+#    - name: Native Executable
+#      pattern: target/gist-api-1.0-SNAPSHOT-runner
   # Job's requirements
 #  requirements:
 #    - Docker
 #    - JDK
 #    - MVN
 
-#Deploy:
-#  tasks:
-#    - script:
-#        docker run -d --rm -p 8080:8080
+Deploy:
+  tasks:
+    - script:
+        docker run -d --rm -p 8080:8080
