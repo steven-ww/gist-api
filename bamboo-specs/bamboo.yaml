@@ -1,7 +1,7 @@
 ---
 version: 2
 plan:
-  project-key: SP
+  project-key: OP
   key: GIST
   name: Build and Deploy GIST API
 
