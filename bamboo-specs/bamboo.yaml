@@ -28,7 +28,7 @@ Test:
         test-results: '**target/surefire-reports/*.xml'
   # Job's requirements
   requirements:
-    - JDK17
+    - JDK
     - MVN
 
 Build:
