@@ -21,13 +21,14 @@ stages:
 Test:
   tasks:
     - script:
+        - export JAVA_HOME=/Users/eework/.sdkman/candidates/java/17.0.5-amzn
         - mvn test
     - test-parser:
         type: junit
         test-results: '**target/surefire-reports/*.xml'
   # Job's requirements
   requirements:
-    - JDK
+    - JDK17
     - MVN
 
 Build:
